@@ -1,28 +1,59 @@
-#include<stdio.h>
-void min_max(int i;int j;int a[10])
+#include <stdio.h>
+#include <stdlib.h>
+#define n 10
+int i, a[n];
+int max, min;
+void maxmin(int a[], int i, int j)
 {
-    if(i==j)
+    int max1, min1, mid;
+    if (i == j)
     {
-        min=max=a[i];
+        max = min = a[i];
     }
-    if(i==j-1)
+    else
     {
-        if(a[i]>a[j])
+        if (i == j - 1)
         {
-            min=a[j];
-            max=a[i];
+            if (a[i] < a[j])
+            {
+                max = a[j];
+                min = a[i];
+            }
+            else
+            {
+                max = a[i];
+                min = a[j];
+            }
+        }
+        else
+        {
+            mid = (i + j) / 2;
+            maxmin(a, i, mid);
+            max1 = max;
+            min1 = min;
+            maxmin(a, mid + 1, j);
+            if (max < max1)
+                max = max1;
+            if (min > min1)
+                min = min1;
         }
     }
-    
 }
-void main()
-{   int i,n;
-    printf("enter the length of the array to be sorted:");
-    scanf("%d",&n);
-    printf("enter the array to be sorted using min-max algorithm:");
-    for(i=0;i<n;i++)
+int main()
+{
+    for (int i = 0; i < n; i++)
     {
-    scanf("%d",&a[i]);
+        a[i] = rand()%100;
     }
-    
+    printf("Element in array : ");
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", a[i]);
+    }
+    max = a[0];
+    min = a[0];
+    maxmin(a, 0, n);
+    printf("\nMinimum element in an array : %d\n", min);
+    printf("Maximum element in an array : %d\n", max);
+    return 0;
 }
